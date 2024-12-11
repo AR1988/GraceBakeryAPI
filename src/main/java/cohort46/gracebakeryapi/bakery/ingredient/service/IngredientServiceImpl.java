@@ -1,5 +1,6 @@
 package cohort46.gracebakeryapi.bakery.ingredient.service;
 
+import cohort46.gracebakeryapi.bakery.bakeryoptional.model.Bakeryoptional;
 import cohort46.gracebakeryapi.bakery.ingredient.controller.IngredientController;
 import cohort46.gracebakeryapi.bakery.ingredient.dao.IngredientRepository;
 import cohort46.gracebakeryapi.bakery.section.dao.SectionRepository;
@@ -59,5 +60,11 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     public Iterable<IngredientDto> findIngredientsByProduct(Long product_id) {
         return ingredientRepository.findByProductsId(product_id).map(i -> modelMapper.map(i, IngredientDto.class)).toList() ;
+    }
+
+    @Transactional
+    @Override
+    public Ingredient store(Ingredient ingredient) {
+        return ingredientRepository.saveAndFlush(ingredient);
     }
 }

@@ -1,7 +1,7 @@
 package cohort46.gracebakeryapi.bakery.size.model;
 
 import cohort46.gracebakeryapi.bakery.optionsize.model.Optionsize;
-import cohort46.gracebakeryapi.bakery.temp.model.ProductSize;
+import cohort46.gracebakeryapi.bakery.productsize.model.Productsize;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,6 +30,6 @@ public class Size {
     private Set<Optionsize> optionsizes = new HashSet<>();
 
     @OneToMany(mappedBy = "size", cascade = CascadeType.ALL)
-    private Set<ProductSize> productsizes = new HashSet<>();
+    private Set<Productsize> productsizes = new HashSet<>();
 }
 // {size_id* , title_de, title_ru, mass, diametr, persons}

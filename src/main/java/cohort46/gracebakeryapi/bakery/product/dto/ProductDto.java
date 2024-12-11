@@ -1,15 +1,17 @@
 package cohort46.gracebakeryapi.bakery.product.dto;
 
 import cohort46.gracebakeryapi.bakery.bakeryoptional.dto.BakeryoptionalDto;
+import cohort46.gracebakeryapi.bakery.filter.dto.FilterDto;
 import cohort46.gracebakeryapi.bakery.ingredient.dto.IngredientDto;
 import cohort46.gracebakeryapi.bakery.image.dto.ImageDto;
-import cohort46.gracebakeryapi.bakery.temp.dto.ProductSizeDto;
+import cohort46.gracebakeryapi.helperclasses.SizePrice;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -17,6 +19,7 @@ import java.util.Set;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductDto {
     @NotNull
+    @Setter
     private Long id;
 
     private String title_de;
@@ -26,20 +29,22 @@ public class ProductDto {
     private Boolean isActive;
 
     @NotNull
-    @Setter
+    //@Setter
     private Long categoryid;
 
     @JsonProperty("image")
     private Set<ImageDto> images;
 
 
-    private Set<IngredientDto> ingridients;
+    private Set<IngredientDto> ingredients;
 
 
-    private Set<BakeryoptionalDto> bakeryOptionals;
+    private Set<BakeryoptionalDto> bakeryoptionals;
 
-    @JsonProperty("productSize")
-    private Set<ProductSizeDto> productSizes;
+    private Set<FilterDto> filters;
+
+    @JsonProperty("sizeprices")
+    private Set<SizePrice> sizeprices = new HashSet<>();
 
 
 }

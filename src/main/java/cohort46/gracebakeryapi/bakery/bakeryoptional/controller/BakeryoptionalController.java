@@ -3,6 +3,7 @@ package cohort46.gracebakeryapi.bakery.bakeryoptional.controller;
 import cohort46.gracebakeryapi.bakery.bakeryoptional.dto.BakeryoptionalDto;
 import cohort46.gracebakeryapi.bakery.bakeryoptional.service.BakeryoptionalService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -12,6 +13,7 @@ public class BakeryoptionalController {
     private final BakeryoptionalService bakeryoptionalService;
 
     @PostMapping("/api/option")
+    @ResponseStatus(HttpStatus.CREATED)
     public BakeryoptionalDto addBakeryoptional(@RequestBody BakeryoptionalDto bakeryoptionalDto) {
         return bakeryoptionalService.addBakeryoptional(bakeryoptionalDto)  ;
     }//Long

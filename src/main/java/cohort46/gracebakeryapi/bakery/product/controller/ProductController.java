@@ -1,36 +1,55 @@
 package cohort46.gracebakeryapi.bakery.product.controller;
 
+import cohort46.gracebakeryapi.bakery.filter.dto.FilterDto;
 import cohort46.gracebakeryapi.bakery.product.dto.ProductDto;
 import cohort46.gracebakeryapi.bakery.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class ProductController {
     private final ProductService productService;
 
-    @PostMapping("/api/product")
+    @PostMapping("/product")
     public ProductDto addProduct(@RequestBody ProductDto productDto) {
         return productService.addProduct(productDto)  ;
     }//Long
 
-    @GetMapping("/api/product/{id}")
+    @GetMapping("/product/{id}")
     public ProductDto findProductById(@PathVariable Long id) {
         return productService.findProductById(id);
     }
 
-    @PutMapping("/api/product")
-    public ProductDto updateProduct( @RequestBody ProductDto productDto) {
-        return productService.updateProduct(productDto);
+    @PutMapping("/product")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProductDto updateProduct( @RequestBody ProductDto productDto, Long id) {
+        return productService.updateProduct(productDto, id);
     }
-    @PatchMapping("/api/product/{id}/isactive/{isactive}")
+    @PatchMapping("/product/{id}/isactive/{isactive}")
     ProductDto activateProduct(@PathVariable Long id, @PathVariable Boolean isactive){
         return productService.activateProduct( id, isactive );
     }
 
-    @GetMapping("/api/products/isactive/{isactive}")
+    @GetMapping("/products/isactive/{isactive}")
     public Iterable<ProductDto> findProductsByIsActive(@PathVariable Boolean isactive) {
         return productService.findProductsByIsActive(isactive);
+    }
+
+    @GetMapping("/products/category/{category_id}")
+    public Iterable<ProductDto> findProductsByCategory(@PathVariable Long category_id) {
+        return productService.findProductsByCategory(category_id);
+    }
+
+    @GetMapping("/products/filters")
+    public Iterable<ProductDto> findProductsByFilters(@RequestBody Iterable<FilterDto> filters) {
+        return productService.findProductsByFilters(filters);
+    }
+
+    @GetMapping("/api/products")
+    public Iterable<ProductDto> getProductsAll() {
+        return productService.getProductsAll();
     }
 }

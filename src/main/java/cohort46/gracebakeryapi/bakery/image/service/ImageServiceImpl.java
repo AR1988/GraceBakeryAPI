@@ -1,5 +1,6 @@
 package cohort46.gracebakeryapi.bakery.image.service;
 
+import cohort46.gracebakeryapi.bakery.filter.model.Filter;
 import cohort46.gracebakeryapi.bakery.image.controller.ImageController;
 import cohort46.gracebakeryapi.bakery.product.dao.ProductRepository;
 import cohort46.gracebakeryapi.bakery.image.dao.ImageRepository;
@@ -56,5 +57,11 @@ public class ImageServiceImpl implements ImageService {
         Image image = imageRepository.findById(imageDto.getId()).orElseThrow(EntityNotFoundException::new);
         modelMapper.map(imageDto, image);
         return modelMapper.map(imageRepository.save(image), ImageDto.class);
+    }
+
+    @Transactional
+    @Override
+    public Image store(Image image) {
+        return imageRepository.saveAndFlush(image);
     }
 }

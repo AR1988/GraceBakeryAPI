@@ -25,8 +25,9 @@ public class BakeryoptionalDto {
     @NonNull
     private String image;
 
-    private Set<ProductDto> products = new HashSet<>();
+    //private Set<ProductDto> products;
+    private Set<Long> productid;
 
     @JsonProperty("sizeprices")
-    private Set<SizePrice> sizeprices = new HashSet<>();
+    private Set<SizePrice> sizeprices ;
 }

@@ -10,4 +10,5 @@ public interface BakeryoptionalService {
     BakeryoptionalDto updateBakeryoptional(BakeryoptionalDto bakeryoptionalDto, Long id);
     Iterable<BakeryoptionalDto> findBakeryoptionalsByProduct(Long product_id);
     Iterable<BakeryoptionalDto> getBakeryoptionalsAll();
+    Bakeryoptional store(Bakeryoptional option);
 }

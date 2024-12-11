@@ -5,6 +5,7 @@ import cohort46.gracebakeryapi.bakery.category.dto.CategoryDto;
 import cohort46.gracebakeryapi.bakery.ingredient.dto.IngredientDto;
 import cohort46.gracebakeryapi.bakery.ingredient.service.IngredientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -14,6 +15,7 @@ public class IngredientController {
     private final IngredientService ingredientService;
 
     @PostMapping("/api/ingredient")
+    @ResponseStatus(HttpStatus.CREATED)
     public IngredientDto addIngredient(@RequestBody IngredientDto ingredientDto) {
         return ingredientService.addIngredient(ingredientDto)  ;
     }

@@ -21,22 +21,11 @@ public class UserInfo {
     @Setter(AccessLevel.NONE)
     private Long id;
 
-    @NonNull
     private Role role;
-
-    @Nullable
     private String login;
-
-    @Nullable
     private String password;
-
-    @Nullable
     private String firstName;
-
-    @Nullable
     private String lastName;
-
-    @Nullable
     private String email;
 
     @Nullable

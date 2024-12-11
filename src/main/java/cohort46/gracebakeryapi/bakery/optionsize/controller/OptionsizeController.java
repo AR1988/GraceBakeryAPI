@@ -4,6 +4,7 @@ import cohort46.gracebakeryapi.bakery.optionsize.dto.OptionsizeDto;
 import cohort46.gracebakeryapi.bakery.optionsize.service.OptionsizeService;
 import cohort46.gracebakeryapi.bakery.size.dto.SizeDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -13,6 +14,7 @@ public class OptionsizeController {
     private final OptionsizeService optionsizeService;
 
     @PostMapping("/api/optionsize")
+    @ResponseStatus(HttpStatus.CREATED)
     public OptionsizeDto addOptionsize(@RequestBody OptionsizeDto optionsizeDto) {
         return optionsizeService.addOptionsize(optionsizeDto)  ;
     }

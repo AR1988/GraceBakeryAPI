@@ -1,4 +1,4 @@
-package cohort46.gracebakeryapi.bakery.ingredient.dto;
+package cohort46.gracebakeryapi.bakery.filter.dto;
 
 import cohort46.gracebakeryapi.bakery.product.dto.ProductDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class IngredientDto {
+public class FilterDto {
     @NotNull
     @Setter
     private Long id;
@@ -18,10 +18,8 @@ public class IngredientDto {
     private String title_ru;
     private String description_de;
     private String description_ru;
-    @NotNull
-    private String image_de;
-    @NotNull
-    private String image_ru;
+    private String image;
+
 
     //@JsonProperty("product")
     private Set<Long> productid;

@@ -4,6 +4,7 @@ import cohort46.gracebakeryapi.bakery.bakeryoptional.controller.BakeryoptionalCo
 import cohort46.gracebakeryapi.bakery.bakeryoptional.dao.BakeryoptionalRepository;
 import cohort46.gracebakeryapi.bakery.bakeryoptional.dto.BakeryoptionalDto;
 import cohort46.gracebakeryapi.bakery.bakeryoptional.model.Bakeryoptional;
+import cohort46.gracebakeryapi.bakery.filter.model.Filter;
 import cohort46.gracebakeryapi.bakery.optionsize.dto.OptionsizeDto;
 import cohort46.gracebakeryapi.bakery.optionsize.model.Optionsize;
 import cohort46.gracebakeryapi.bakery.optionsize.service.OptionsizeService;
@@ -83,8 +84,7 @@ public class BakeryoptionalServiceImpl implements BakeryoptionalService {
     @Override
     public Iterable<BakeryoptionalDto> findBakeryoptionalsByProduct(Long product_id) {
         //выборка по product_id, сортировка по optionsizes.size.persons
-        Iterable<BakeryoptionalDto> temp = bakeryoptionalRepository.findByProductsId(product_id, Sort.by("optionsizes.size.persons")).map(b -> modelMapper.map(b, BakeryoptionalDto.class)).toList();
-        return temp;
+        return bakeryoptionalRepository.findByProductsId(product_id, Sort.by("optionsizes.size.persons")).map(b -> modelMapper.map(b, BakeryoptionalDto.class)).toList();
     }
 
     @Transactional(readOnly = true)
@@ -93,5 +93,11 @@ public class BakeryoptionalServiceImpl implements BakeryoptionalService {
         //сортировка сначала по product.id, потом сортировка по полю "optionsizes.size.persons"
         Sort sort = Sort.by("products.id").and(Sort.by("optionsizes.size.persons"));
         return bakeryoptionalRepository.findAll(sort).stream().map(b -> modelMapper.map(b, BakeryoptionalDto.class)).toList();
+    }
+
+    @Transactional
+    @Override
+    public Bakeryoptional store(Bakeryoptional option) {
+        return bakeryoptionalRepository.saveAndFlush(option);
     }
 }

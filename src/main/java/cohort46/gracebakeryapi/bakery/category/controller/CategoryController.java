@@ -4,6 +4,7 @@ import cohort46.gracebakeryapi.bakery.category.dto.CategoryDto;
 import cohort46.gracebakeryapi.bakery.category.service.CategoryService;
 import cohort46.gracebakeryapi.bakery.section.dto.SectionDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -13,6 +14,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PostMapping("/api/category")
+    @ResponseStatus(HttpStatus.CREATED)
     public CategoryDto addCategory(@RequestBody CategoryDto categoryDto) {
         return categoryService.addCategory(categoryDto)  ;
     }//Long

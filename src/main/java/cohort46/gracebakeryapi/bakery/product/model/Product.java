@@ -2,12 +2,11 @@ package cohort46.gracebakeryapi.bakery.product.model;
 
 import cohort46.gracebakeryapi.bakery.bakeryoptional.model.Bakeryoptional;
 import cohort46.gracebakeryapi.bakery.category.model.Category;
-import cohort46.gracebakeryapi.bakery.ingredient.model.Ingredient;
+import cohort46.gracebakeryapi.bakery.filter.model.Filter;
 import cohort46.gracebakeryapi.bakery.image.model.Image;
-import cohort46.gracebakeryapi.bakery.temp.model.ProductSize;
+import cohort46.gracebakeryapi.bakery.ingredient.model.Ingredient;
+import cohort46.gracebakeryapi.bakery.productsize.model.Productsize;
 import jakarta.persistence.*;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToMany;
 import lombok.*;
 
 import java.util.HashSet;
@@ -43,14 +42,11 @@ public class Product {
     @ManyToMany
     private Set<Bakeryoptional> bakeryoptionals = new HashSet<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private Set<ProductSize> productSizes = new HashSet<>();
+    @ManyToMany
+    private Set<Filter> filters = new HashSet<>();
 
-    /*
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id")
-    private Set<ProductSize> productSizes = new HashSet<>();
-     */
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private Set<Productsize> productsizes = new HashSet<>();
 
     @Column(nullable = false)
     private Boolean isActive;
