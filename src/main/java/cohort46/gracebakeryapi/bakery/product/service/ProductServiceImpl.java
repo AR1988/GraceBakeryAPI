@@ -4,6 +4,8 @@ import cohort46.gracebakeryapi.bakery.bakeryoptional.dao.BakeryoptionalRepositor
 import cohort46.gracebakeryapi.bakery.bakeryoptional.dto.BakeryoptionalDto;
 import cohort46.gracebakeryapi.bakery.bakeryoptional.model.Bakeryoptional;
 import cohort46.gracebakeryapi.bakery.bakeryoptional.service.BakeryoptionalService;
+import cohort46.gracebakeryapi.bakery.category.dao.CategoryRepository;
+import cohort46.gracebakeryapi.bakery.category.model.Category;
 import cohort46.gracebakeryapi.bakery.filter.dao.FilterRepository;
 import cohort46.gracebakeryapi.bakery.filter.dto.FilterDto;
 import cohort46.gracebakeryapi.bakery.filter.model.Filter;
@@ -37,6 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
     private final ImageRepository imageRepository;
+    private final CategoryRepository categoryRepository;
     private ProductController productController;
 
     private final FilterRepository filterRepository;
@@ -59,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     @Override
     public ProductDto addProduct(ProductDto productDto) {
-        if(!checkSource(productDto)) return null;
+        if(!checkSource(productDto)) throw new EntityNotFoundException();
         Product product = modelMapper.map(productDto, Product.class);
         product.setId(null);
         product = productRepository.save(product);
@@ -78,7 +81,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     @Override
     public ProductDto updateProduct(ProductDto productDto, Long id) {
-        if(!checkSource(productDto)) return null;
+        if(!checkSource(productDto)) throw new EntityNotFoundException();
         productDto.setId(id);
         productRepository.findById(productDto.getId()).orElseThrow(EntityNotFoundException::new);
         Product product = modelMapper.map(productDto, Product.class);
@@ -136,7 +139,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Iterable<ProductDto> findProductsByCategory(Long category_id) {
         //сначала выборка по category.id, потом сортировка по полю "ingredients.id" , потом сортировка по полю "productsizes.size.persons"
-        return productRepository.findProductsByCategoryId(category_id, Sort.by("ingredients.id").and((Sort.by("productsizes.size.persons")))).map(p -> modelMapper.map(p, ProductDto.class)).toList();
+        categoryRepository.findById(category_id).orElseThrow(EntityNotFoundException::new);
+        Sort sort = Sort.by("ingredients.id").and((Sort.by("productsizes.size.persons")));
+        return productRepository.findProductsByCategoryId( category_id  , sort).stream().map(p -> modelMapper.map(p, ProductDto.class)).toList();
     }
 
     @Override

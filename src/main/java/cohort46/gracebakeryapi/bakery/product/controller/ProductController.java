@@ -23,9 +23,9 @@ public class ProductController {
         return productService.findProductById(id);
     }
 
-    @PutMapping("/product")
+    @PutMapping("/product/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductDto updateProduct( @RequestBody ProductDto productDto, Long id) {
+    public ProductDto updateProduct( @RequestBody ProductDto productDto, @PathVariable Long id) {
         return productService.updateProduct(productDto, id);
     }
     @PatchMapping("/product/{id}/isactive/{isactive}")
@@ -48,7 +48,7 @@ public class ProductController {
         return productService.findProductsByFilters(filters);
     }
 
-    @GetMapping("/api/products")
+    @GetMapping("/products")
     public Iterable<ProductDto> getProductsAll() {
         return productService.getProductsAll();
     }

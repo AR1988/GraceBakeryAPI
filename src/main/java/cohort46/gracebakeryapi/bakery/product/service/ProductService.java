@@ -3,6 +3,7 @@ package cohort46.gracebakeryapi.bakery.product.service;
 import cohort46.gracebakeryapi.bakery.bakeryoptional.dto.BakeryoptionalDto;
 import cohort46.gracebakeryapi.bakery.filter.dto.FilterDto;
 import cohort46.gracebakeryapi.bakery.product.dto.ProductDto;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
