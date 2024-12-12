@@ -8,7 +8,7 @@ public interface ProductsizeService {
     ProductsizeDto addProductsize(ProductsizeDto productsizeDto);//Long
     ProductsizeDto findProductsizeById(Long productsizeId);
     ProductsizeDto deleteProductsize(Long id);
-    ProductsizeDto updateProductsize(ProductsizeDto productsizeDto);
+    ProductsizeDto updateProductsize(ProductsizeDto productsizeDto, Long id);
     Iterable<ProductsizeDto> getProductsizesAll();
     Productsize store(Productsize productsize);
 }

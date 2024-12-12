@@ -44,8 +44,8 @@ public class ProductController {
     }
 
     @GetMapping("/products/filters")
-    public Iterable<ProductDto> findProductsByFilters(@RequestBody Iterable<FilterDto> filters) {
-        return productService.findProductsByFilters(filters);
+    public Iterable<ProductDto> findProductsByFilters(@RequestBody Iterable<Long> filtersId) {
+        return productService.findProductsByFilters(filtersId);
     }
 
     @GetMapping("/products")

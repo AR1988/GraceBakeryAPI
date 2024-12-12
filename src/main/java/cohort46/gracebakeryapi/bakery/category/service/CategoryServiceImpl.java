@@ -31,6 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
     //@Transactional
     @Override
     public CategoryDto addCategory(CategoryDto categoryDto) {
+        sectionRepository.findById(categoryDto.getSectionid());
         Category category = modelMapper.map(categoryDto, Category.class);
         category.setId(null);
         Section section = sectionRepository.findById(categoryDto.getSectionid()).orElseThrow(EntityNotFoundException::new);

@@ -15,6 +15,6 @@ public interface ProductService {
     Iterable<ProductDto> findProductsByIsActive(Boolean isactive);
     Iterable<ProductDto> findProductsByCategory(Long category_id);
     Iterable<ProductDto> getProductsAll();
-    Iterable<ProductDto> findProductsByFilters(Iterable<FilterDto> filters);
+    Iterable<ProductDto> findProductsByFilters(Iterable<Long> filtersId);
 }
 

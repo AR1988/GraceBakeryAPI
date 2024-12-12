@@ -34,6 +34,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -152,8 +155,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Iterable<ProductDto> findProductsByFilters(Iterable<FilterDto> filters) {
-        return null;
+    public Iterable<ProductDto> findProductsByFilters(Iterable<Long> filtersId) {
+        Set<Product> products = new LinkedHashSet<>();
+        //filtersId.forEach(f -> products.addAll(filterRepository.findById(f).orElseThrow(EntityNotFoundException::new).getProducts()));
+        filtersId.forEach(f -> filterRepository.findById(f).orElseThrow(EntityNotFoundException::new).getProducts().forEach( p -> products.add(p) ) );
+        //отсортировать по двум параметрам, во-первых по product.getcategory().getId() , во-вторых по product.getId()
+        Set<Product> sortedProducts = products.stream().sorted(Comparator.comparing((Product product) -> product.getCategory().getId()).thenComparing(Product::getId))
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+        return sortedProducts.stream().map(p -> modelMapper.map(p, ProductDto.class)).toList();
     }
 
     private boolean checkSource(ProductDto productDto)

@@ -53,7 +53,8 @@ public class ProductsizeServiceImpl implements ProductsizeService {
 
     @Transactional
     @Override
-    public ProductsizeDto updateProductsize(ProductsizeDto productsizeDto) {
+    public ProductsizeDto updateProductsize(ProductsizeDto productsizeDto, Long id) {
+        productsizeDto.setId(id);
         Productsize productsize = productsizeRepository.findById(productsizeDto.getId()).orElseThrow(EntityNotFoundException::new);
         modelMapper.map(productsizeDto, productsize);
         return modelMapper.map(productsizeRepository.save(productsize), ProductsizeDto.class);

@@ -7,6 +7,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 @Getter
 public class ProductsizeDto {
     @NotNull
+    @Setter
     private Long id;
 
     private double price;

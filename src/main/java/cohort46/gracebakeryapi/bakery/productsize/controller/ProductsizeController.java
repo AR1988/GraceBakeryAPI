@@ -28,9 +28,9 @@ public class ProductsizeController {
         return productsizeService.deleteProductsize(id);
     }
 
-    @PutMapping("/api/productsize")
-    public ProductsizeDto updateProductsize(@RequestBody ProductsizeDto productsizeDto) {
-        return productsizeService.updateProductsize(productsizeDto);
+    @PutMapping("/api/productsize/{id}")
+    public ProductsizeDto updateProductsize(@RequestBody ProductsizeDto productsizeDto, @PathVariable Long id) {
+        return productsizeService.updateProductsize(productsizeDto, id);
     }
 
     @GetMapping("/api/productsizes")
