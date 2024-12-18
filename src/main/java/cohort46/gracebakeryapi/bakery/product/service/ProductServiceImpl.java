@@ -36,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Service
@@ -138,7 +139,7 @@ public class ProductServiceImpl implements ProductService {
     public Iterable<ProductDto> findProductsByIsActive(Boolean isactive) {
         return productRepository.findProductsByIsActive(isactive).map(s -> modelMapper.map(s, ProductDto.class)).toList() ;
     }
-
+    @Transactional(readOnly = true)
     @Override
     public Iterable<ProductDto> findProductsByCategory(Long category_id) {
         //сначала выборка по category.id, потом сортировка по полю "ingredients.id" , потом сортировка по полю "productsizes.size.persons"
@@ -147,6 +148,16 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findProductsByCategoryId( category_id  , sort).stream().map(p -> modelMapper.map(p, ProductDto.class)).toList();
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public Iterable<ProductDto> findProductsByCategoryIdAndIsActive(Long category_id, Boolean isactive) {
+        //сначала выборка по category.id, потом сортировка по полю "ingredients.id" , потом сортировка по полю "productsizes.size.persons"
+        categoryRepository.findById(category_id).orElseThrow(EntityNotFoundException::new);
+        Sort sort = Sort.by("ingredients.id").and((Sort.by("productsizes.size.persons")));
+        return productRepository.findProductsByCategoryIdAndIsActive( category_id  , isactive , sort).stream().map(p -> modelMapper.map(p, ProductDto.class)).toList();
+    }
+
+    @Transactional(readOnly = true)
     @Override
     public Iterable<ProductDto> getProductsAll() {
         //сортировка сначала по category.id, потом сортировка по полю "ingredients.id" , потом сортировка по полю "productsizes.size.persons"
@@ -154,6 +165,7 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll(sort).stream().map(p -> modelMapper.map(p, ProductDto.class)).toList();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Iterable<ProductDto> findProductsByFilters(Iterable<Long> filtersId) {
         Set<Product> products = new LinkedHashSet<>();
@@ -163,6 +175,34 @@ public class ProductServiceImpl implements ProductService {
         Set<Product> sortedProducts = products.stream().sorted(Comparator.comparing((Product product) -> product.getCategory().getId()).thenComparing(Product::getId))
                 .collect(Collectors.toCollection(LinkedHashSet::new));
         return sortedProducts.stream().map(p -> modelMapper.map(p, ProductDto.class)).toList();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Iterable<ProductDto> findProductsByPrice(Double min, Double max) {
+        List<Product> products = productRepository.findAll();
+        List<ProductDto> productDtos = new ArrayList<>();
+        Product temp = new Product();
+        for(Product product : products) {
+            if (product.getIsActive())
+            {
+                for (Productsize productsize : product.getProductsizes() ) {
+                    if ( (productsize.getPrice() >= min) && (productsize.getPrice() <= max ) ){
+                        temp.setId(product.getId());
+                        temp.setCategory(product.getCategory());
+                        temp.setDescription_de(product.getDescription_de());
+                        temp.setDescription_ru(product.getDescription_ru());
+                        temp.setTitle_de(product.getTitle_de());
+                        temp.setTitle_ru(product.getTitle_ru());
+                        temp.getProductsizes().add(productsize);
+                        productDtos.add( modelMapper.map(product, ProductDto.class));
+                        temp.getProductsizes().clear();
+                    }
+                }
+            }
+
+        }
+        return productDtos;
     }
 
     private boolean checkSource(ProductDto productDto)

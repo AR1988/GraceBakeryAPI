@@ -3,6 +3,7 @@ package cohort46.gracebakeryapi.bakery.size.controller;
 import cohort46.gracebakeryapi.bakery.size.dto.SizeDto;
 import cohort46.gracebakeryapi.bakery.size.service.SizeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -12,6 +13,7 @@ public class SizeController {
     private final SizeService sizeService;
 
     @PostMapping("/api/size")
+    @ResponseStatus(HttpStatus.CREATED)
     public SizeDto addSize(@RequestBody SizeDto sizeDto) {
         return sizeService.addSize(sizeDto)  ;
     }

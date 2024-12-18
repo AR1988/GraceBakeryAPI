@@ -1,5 +1,7 @@
 package cohort46.gracebakeryapi.configuration;
 
+import cohort46.gracebakeryapi.bakery.address.dto.AddressDto;
+import cohort46.gracebakeryapi.bakery.address.model.Address;
 import cohort46.gracebakeryapi.bakery.bakeryoptional.dto.BakeryoptionalDto;
 import cohort46.gracebakeryapi.bakery.bakeryoptional.model.Bakeryoptional;
 import cohort46.gracebakeryapi.bakery.category.dto.CategoryDto;
@@ -60,11 +62,11 @@ public class ServiceConfiguration {
 
         /***************Filter*************/
         // Создаем маппинг для Filter -> FilterDto
-         modelMapper.addMappings(new PropertyMap<Filter, FilterDto>() {
+        modelMapper.addMappings(new PropertyMap<Filter, FilterDto>() {
             protected void configure() {
                 map(source.getId(), destination.getId());
                 using(new Converter<Set<Product>, Set<Long>>() {
-                     public Set<Long> convert(MappingContext<Set<Product>, Set<Long>> context) {
+                    public Set<Long> convert(MappingContext<Set<Product>, Set<Long>> context) {
                         Set<Long> productIds = new HashSet<>();
                         for (Product product : context.getSource()) {
                             productIds.add(product.getId());
@@ -73,7 +75,7 @@ public class ServiceConfiguration {
                     }
                 }).map(source.getProducts(), destination.getProductid());
             }
-         });
+        });
 
         /***************Ingredient*************/
         // Создаем маппинг для Ingredient -> IngredientDto
@@ -100,6 +102,14 @@ public class ServiceConfiguration {
             protected void configure() {
                 // маппинг полей с разными именами
                 map(source.getProduct().getId(), destination.getProductid());
+            }
+        });
+
+        /***************Address*************/
+        modelMapper.addMappings(new PropertyMap<Address, AddressDto>() {
+            @Override
+            protected void configure() {
+                map(source.getUser().getId(), destination.getUserid());
             }
         });
 

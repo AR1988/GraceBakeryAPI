@@ -1,6 +1,7 @@
 package cohort46.gracebakeryapi.accounting.model;
 
-import cohort46.gracebakeryapi.bakery.temp.model.Address;
+
+import cohort46.gracebakeryapi.bakery.address.model.Address;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,7 +15,7 @@ import java.util.Set;
 @Setter
 @EqualsAndHashCode(of = "id")
 @Entity
-public class UserInfo {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
@@ -34,8 +35,8 @@ public class UserInfo {
     @Nullable
     private long birth_date;
 
-    @OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL)
-    private Set<Address> statuses = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Address> addresses = new HashSet<>();
 
 }
 //{user_id*, role, login, password, name, email, phone*, birth_date,  [address,...], is_registered}

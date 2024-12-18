@@ -11,4 +11,5 @@ public interface ImageService {
     ImageDto deleteImage(Long id);
     ImageDto updateImage(ImageDto imageDto, Long id);
     Image store(Image image);
+    Iterable<ImageDto> findByProductId(Long product_id);
 }

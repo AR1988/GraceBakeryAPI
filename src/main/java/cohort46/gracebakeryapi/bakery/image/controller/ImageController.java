@@ -9,28 +9,34 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 
 public class ImageController {
     private final ImageService imageService;
 
-    @PostMapping("/api/image")
+    @PostMapping("/image")
     @ResponseStatus(HttpStatus.CREATED)
     public ImageDto addImage(@RequestBody ImageDto imageDto) {
         return imageService.addImage(imageDto)  ;
     }
 
-    @GetMapping("/api/image/{id}")
+    @GetMapping("/image/{id}")
     public ImageDto findImageById(@PathVariable Long id) {
         return imageService.findImageById(id);
     }
 
-    @DeleteMapping("/api/image/{id}")
+    @DeleteMapping("/image/{id}")
     public ImageDto deleteImage(@PathVariable Long id) {
         return imageService.deleteImage(id);
     }
 
-    @PutMapping("/api/image/{id}")
+    @PutMapping("/image/{id}")
     public ImageDto updateImage( @RequestBody ImageDto imageDto, @PathVariable Long id) {
         return imageService.updateImage(imageDto, id);
+    }
+
+    @GetMapping("/images/product/{product_id}")
+    public Iterable<ImageDto> findByProductId(@PathVariable Long product_id) {
+        return imageService.findByProductId(product_id);
     }
 }

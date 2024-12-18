@@ -12,6 +12,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Stream<Product> findProductsByIsActive(Boolean isactive);
     //Stream<Product> findProductsByCategory_Id(Long category_id, Sort sort);
     List<Product> findProductsByCategoryId(Long category_id, Sort sort) ;
+    List<Product> findProductsByCategoryIdAndIsActive(Long category_id, Boolean isactive, Sort sort);
 }
 
 

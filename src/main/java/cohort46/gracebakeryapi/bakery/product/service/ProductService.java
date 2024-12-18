@@ -16,5 +16,7 @@ public interface ProductService {
     Iterable<ProductDto> findProductsByCategory(Long category_id);
     Iterable<ProductDto> getProductsAll();
     Iterable<ProductDto> findProductsByFilters(Iterable<Long> filtersId);
+    Iterable<ProductDto> findProductsByPrice(Double min, Double max);
+    Iterable<ProductDto> findProductsByCategoryIdAndIsActive(Long category_id, Boolean isActive);
 }
 

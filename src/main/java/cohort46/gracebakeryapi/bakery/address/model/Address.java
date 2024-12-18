@@ -1,7 +1,6 @@
-package cohort46.gracebakeryapi.bakery.temp.model;
+package cohort46.gracebakeryapi.bakery.address.model;
 
-import cohort46.gracebakeryapi.accounting.model.UserInfo;
-import jakarta.annotation.Nullable;
+import cohort46.gracebakeryapi.accounting.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,25 +14,20 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    @Setter(AccessLevel.NONE)
+    //@Setter(AccessLevel.NONE)
     private Long id;
 
-    @NonNull
     @Column(nullable = false, unique=true)
     private String address;
 
-    @Nullable
     private String city;
 
-    @Nullable
     private String street;
 
-    @Nullable
     private Integer building;
 
-    @Nullable
     private String apartment;
 
-    @ManyToOne
-    private UserInfo userInfo;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private User user;
 }

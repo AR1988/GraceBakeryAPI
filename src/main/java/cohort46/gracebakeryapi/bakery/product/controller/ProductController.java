@@ -43,6 +43,11 @@ public class ProductController {
         return productService.findProductsByCategory(category_id);
     }
 
+    @GetMapping("/products/category/{category_id}/isactive/{isActive}")
+    public Iterable<ProductDto> findProductsByCategoryIdAndIsActive(@PathVariable Long category_id, @PathVariable Boolean isActive) {
+        return productService.findProductsByCategoryIdAndIsActive(category_id, isActive);
+    }
+
     @GetMapping("/products/filters")
     public Iterable<ProductDto> findProductsByFilters(@RequestBody Iterable<Long> filtersId) {
         return productService.findProductsByFilters(filtersId);
@@ -52,4 +57,10 @@ public class ProductController {
     public Iterable<ProductDto> getProductsAll() {
         return productService.getProductsAll();
     }
+
+    @GetMapping("/products/price/{min}/{max}")
+    public Iterable<ProductDto> findProductsByPrice(@PathVariable Double min, @PathVariable Double max) {
+        return productService.findProductsByPrice(min, max);
+    }
 }
+///api/products/category/{categoryId}/isactive/{isActive}
